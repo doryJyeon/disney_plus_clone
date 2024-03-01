@@ -21,9 +21,9 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<LoginPage />} />
-          <Route path="main" element={<MainPage />} />
-          <Route path=":moveId" element={<DetailPage />} />
+          <Route index element={<MainPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path=":movieId" element={<DetailPage />} />
           <Route path="search" element={<SearchPage />} />
         </Route>
       </Routes>
