@@ -1,0 +1,21 @@
+.movie__date, .movie__name, .movie__tagline, .movie__description {
+  margin: 1rem 2rem;
+}
+.movie__date {
+  font-size: .9rem;
+  color: #999;
+}
+.movie__name {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.movie__tagline {
+  font-weight: 200;
+  font-style: italic;
+  text-decoration: underline;
+  font-size: 1.2rem;
+}
+.movie__description {
+  word-break: break-all;
+  line-height: 1.5;
+}
