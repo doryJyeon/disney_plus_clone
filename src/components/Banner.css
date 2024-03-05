@@ -54,7 +54,7 @@
 .banner__title {
   font-size: 3rem;
   font-weight: 800;
-  padding-bottom: 0.5rem;
+  padding-bottom: 5rem;
 }
 
 .banner__description {
@@ -79,6 +79,7 @@
 .banner__buttons {
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 }
 
 .banner__button {
@@ -103,4 +104,13 @@
 .play {
   background-color: white;
   color: black;
+}
+
+.play__stopbtn {
+  padding: 0.3rem 0.6rem;
+  border-radius: 0 0 7px 7px;
+  background-color: rgba(255,255,255,0.8);
+  outline: none;
+  border: none;
+  cursor: pointer;
 }

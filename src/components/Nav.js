@@ -188,5 +188,6 @@ const Logo = styled.a`
   img {
     display: block;
     width: 100%;
+    cursor: pointer;
   }
 `

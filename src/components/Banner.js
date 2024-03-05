@@ -47,7 +47,7 @@ const Banner = () => {
             ></Iframe>
           </HomeContainer>
         </Container>
-        <button onClick={() => setIsPlay(false)}>
+        <button class="play__stopbtn" onClick={() => setIsPlay(false)}>
           X
         </button>
       </>
