@@ -72,7 +72,7 @@ const Nav = () => {
       </Logo>
 
       { pathname === "/" 
-        ? (<Login onClick={handleAuth} ></Login>) 
+        ? (<Login onClick={handleAuth} >Login</Login>) 
         : (
           <>
             <Input 
@@ -83,7 +83,7 @@ const Nav = () => {
               placeholder="movie search"
             />
 
-            <SignOut onclick={handleSignOut}>
+            <SignOut onClick={handleSignOut}>
               <UserImg src={userData.photoURL} alt={userData.displayName} />
               <DropDown>
                 Sign Out
@@ -138,11 +138,13 @@ const UserImg = styled.img`
 
 const Login = styled.a`
   background-color: rgba(0,0,0,0.6);
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   border: 1px solid #f9f9f9;
   transition: all 0.2s ease 0s;
+  color: #fff;
+  cursor: pointer;
 
   &:hover {
     background-color: #f9f9f9;
