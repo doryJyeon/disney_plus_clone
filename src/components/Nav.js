@@ -1,12 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from "react-router-dom"
 import styled from 'styled-components'
+import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
 
 const Nav = () => {
-  const { pathName } = useLocation()
+  const { pathname } = useLocation()
   const navigate = useNavigate()
   const [show, handleShow] = useState(false)
-  const [searchValue, setSearchValue] = useState()
+  const [searchValue, setSearchValue] = useState("")
+  const auth = getAuth()
+  const provider = new GoogleAuthProvider()
+  const initialUserData = localStorage.getItem("userData")? JSON.parse(localStorage.getItem("userData")) : {}
+  const [userData, setUserData] = useState(initialUserData)
+
+  // login에 따라서 페이지 이동
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if(user && pathname === "/") {
+        navigate("/main")
+      } else if(!user) {
+        navigate("/")
+      }
+    })
+  }, [auth, navigate, pathname])
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll)
@@ -24,25 +40,56 @@ const Nav = () => {
     navigate(`/search?q=${e.target.value}`)
   }
 
+  const handleAuth = () => {
+    signInWithPopup(auth, provider)
+    .then(result => {
+      setUserData(result.user)
+      localStorage.setItem("userData", JSON.stringify(result.user))
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        setUserData({})
+        localStorage.removeItem("userData")
+        navigate(`/`)
+      }).catch(error => {
+        alert(error.message)
+      })
+  }
+
   return (
     <NavWrapper show={show}>
       <Logo>
         <img 
           src="/images/logo.svg" 
           alt="Disney Plus logo"
-          onClick={() => {window.location.href = "/"}} />
+          onClick={() => {navigate("/")}} />
       </Logo>
 
-      { pathName === "/" 
-        ? (<Login></Login>) 
+      { pathname === "/" 
+        ? (<Login onClick={handleAuth} ></Login>) 
         : (
-          <Input 
-            value={searchValue} 
-            onChange={handleChange}
-            className="nav__input"
-            type="text"
-            placeholder="movie search"
-          />
+          <>
+            <Input 
+              value={searchValue} 
+              onChange={handleChange}
+              className="nav__input"
+              type="text"
+              placeholder="movie search"
+            />
+
+            <SignOut onclick={handleSignOut}>
+              <UserImg src={userData.photoURL} alt={userData.displayName} />
+              <DropDown>
+                Sign Out
+              </DropDown>
+            </SignOut>
+          </>
         )
       }
     </NavWrapper>
@@ -51,12 +98,11 @@ const Nav = () => {
 
 export default Nav
 
-// style
 const DropDown = styled.div`
   position: absolute;
   top: 48px;
   right: 0px;
-  background: rgb(19, 19, 19)
+  background-color: rgba(19, 19, 19, .6);
   border: 1px solid rgba(151, 151, 151, 0.34);
   border-radius:  4px;
   box-shadow: rgb(0 0 0 /50%) 0px 0px 18px 0px;
@@ -122,8 +168,8 @@ const NavWrapper = styled.nav`
   left: 0;
   right: 0;
   height: 70px;
-  display: flex;
   background-color: ${props => props.show ? "#090b13" : "transparent"};
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 36px;

@@ -5,8 +5,7 @@ const requests = {
   fetchActionMovies:"/discover/movie?with_genres=28",
   fetchComedyMovies:"/discover/movie?with_genres=35",
   fetchHorrorMovies:"/discover/movie?with_genres=27",
-  fetchRomenceMovies:"/discover/movie?with_genres=10749",
+  fetchRomanceMovies:"/discover/movie?with_genres=10749",
   fetchDocumentaries:"/discover/movie?with_genres=99",
 }
-
 export default requests

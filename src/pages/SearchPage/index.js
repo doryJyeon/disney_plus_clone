@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "../../api/axios"
-import "./SearchPage.css"
 import useDebounce from './../../hooks/useDebounce';
+import "./SearchPage.css"
 
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([])
@@ -50,11 +50,13 @@ const SearchPage = () => {
       </section>
     )
   } else {
-    <section className="no-results">
-      <div className="no-results__text">
-        <p>찾고자하는 검색어 "{searchTerm}"에 맞는 영화가 없습니다.</p>
-      </div>
-    </section>
+    return (
+      <section className="no-results">
+        <div className="no-results__text">
+          <p>찾고자하는 검색어 "{searchTerm}"에 맞는 영화가 없습니다.</p>
+        </div>
+      </section>
+    )
   }
 }
 
