@@ -40,8 +40,9 @@ const SearchPage = () => {
             const movieImageUrl = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
             return (
               <div className="movie" key={movie.id}>
-                <div className="movie__colum-poster" onClick={() => navigate(`/${movie.id}`)} >
+                <div className="movie__column-poster" onClick={() => navigate(`/${movie.id}`)} >
                   <img src={movieImageUrl} alt="movie" className="movie__poster" />
+                  <p className="movie__title">{movie.title? movie.title :movie.name}</p>
                 </div>
               </div>
             )

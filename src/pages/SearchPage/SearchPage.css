@@ -1,13 +1,13 @@
-.searchContent {
-  height: 100vh;
-  background-color: black;
-}
-
 .search-container {
   background-color: black;
   width: 100%;
   text-align: center;
-  padding: 5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 5rem 1rem;
+  padding: 5rem 1rem;
+  box-sizing: border-box;
 }
 
 .no-results {
@@ -20,12 +20,22 @@
 }
 
 .movie {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   display: inline-block;
-  padding-right: 0.5rem;
-  padding-bottom: 7rem;
+  position: relative;
 }
 
+.movie__column-poster::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 80%, rgba(0,0,0,0.7) 100%);
+}
 .movie__column-poster {
   cursor: pointer;
   transition: transform 0.3s;
@@ -37,6 +47,15 @@
 }
 
 .movie__poster {
-  width: 90%;
+  width: 100%;
   border-radius: 5px;
+}
+.movie__title {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
