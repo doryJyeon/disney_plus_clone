@@ -8,9 +8,9 @@ export default function useDebounce (value, delay) {
       setDebounceValue(value)
     }, delay)
 
-    return (
+    return () => {
       clearTimeout(handler)
-    )
+    }
   }, [value, delay])
 
   return debounceValue
