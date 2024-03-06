@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from "react-router-dom"
 import styled from 'styled-components'
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
+import { useDispatch, useSelector } from 'react-redux'
+import { removeUser, setUser } from '../store/userSlice'
 
 const Nav = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const [show, handleShow] = useState(false)
   const [searchValue, setSearchValue] = useState("")
+
   const auth = getAuth()
   const provider = new GoogleAuthProvider()
-  const initialUserData = localStorage.getItem("userData")? JSON.parse(localStorage.getItem("userData")) : {}
-  const [userData, setUserData] = useState(initialUserData)
+
+  const dispatch = useDispatch()
+  const userData = useSelector(state => state.user)
 
   // login에 따라서 페이지 이동
   useEffect(() => {
@@ -43,8 +47,12 @@ const Nav = () => {
   const handleAuth = () => {
     signInWithPopup(auth, provider)
     .then(result => {
-      setUserData(result.user)
-      localStorage.setItem("userData", JSON.stringify(result.user))
+      dispatch(setUser({
+        id: result.user.uid,
+        email: result.user.email,
+        displayName: result.user.displayName,
+        photoURL: result.user.photoURL
+      }))
     })
     .catch(error => {
       console.log(error)
@@ -54,8 +62,7 @@ const Nav = () => {
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        setUserData({})
-        localStorage.removeItem("userData")
+        dispatch(removeUser())
         navigate(`/`)
       }).catch(error => {
         alert(error.message)
