@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "../../api/axios"
+import MovieModal from './../../components/MovieModal'
 import useDebounce from './../../hooks/useDebounce';
 import "./SearchPage.css"
 
 const SearchPage = () => {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [movieSelected, setMoviesSelected] = useState({})
   const [searchResults, setSearchResults] = useState([])
   const navigate = useNavigate()
 
@@ -32,6 +35,13 @@ const SearchPage = () => {
     }
   }
 
+  // 영화 클릭, 모달 오픈
+  const handleClick = movie => {
+    console.log(movie)
+    setMoviesSelected(movie)
+    setModalOpen(true)
+  }
+
   if(searchResults.length > 0) {
     return (
       <section className="search-container">
@@ -40,7 +50,7 @@ const SearchPage = () => {
             const movieImageUrl = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
             return (
               <div className="movie" key={movie.id}>
-                <div className="movie__column-poster" onClick={() => navigate(`/${movie.id}`)} >
+                <div className="movie__column-poster" onClick={() => handleClick(movie)} >
                   <img src={movieImageUrl} alt="movie" className="movie__poster" />
                   <p className="movie__title">{movie.title? movie.title :movie.name}</p>
                 </div>
@@ -48,13 +58,19 @@ const SearchPage = () => {
             )
           }
         })}
+        
+        {modalOpen && 
+          <MovieModal {...movieSelected} setModalOpen={setModalOpen} />
+        }
       </section>
     )
   } else {
     return (
       <section className="no-results">
         <div className="no-results__text">
-          <p>찾고자하는 검색어 "{searchTerm}"에 맞는 영화가 없습니다.</p>
+          {searchTerm && (
+            <p>찾고자하는 검색어 "{searchTerm}"에 맞는 영화가 없습니다.</p>
+          )}
         </div>
       </section>
     )

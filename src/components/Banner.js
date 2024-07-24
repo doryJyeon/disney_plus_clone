@@ -39,7 +39,7 @@ const Banner = () => {
         <Container>
           <HomeContainer>
             <Iframe
-              src={`https://www.youtube.com/embed/${movie.videos.results[0].key}?controls=0&mute=1&loop=1&autoplay=1&playlist=${movie.videos.results[0].key}`}
+              src={`https://www.youtube.com/embed/${movie.videos.results[0].key}?controls=1&mute=1&loop=1&autoplay=1&playlist=${movie.videos.results[0].key}&modestbranding=1&rel=0&showinfo=0`}
               width="640"
               height="360"
               frameBorder="0"

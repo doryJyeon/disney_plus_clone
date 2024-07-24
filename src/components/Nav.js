@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from "react-router-dom"
 import styled from 'styled-components'
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
@@ -8,6 +8,7 @@ import { removeUser, setUser } from '../store/userSlice'
 const Nav = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const searchInputRef = useRef()
   const [show, handleShow] = useState(false)
   const [searchValue, setSearchValue] = useState("")
 
@@ -20,8 +21,14 @@ const Nav = () => {
   // login에 따라서 페이지 이동
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if(user && pathname === "/") {
-        navigate("/main")
+      if(user) {
+        if(pathname === "/") {
+          navigate("/main")
+          setSearchValue("")
+        } else if(pathname === "/search") {
+          setSearchValue(searchValue)
+          searchInputRef.current.focus()
+        }
       } else if(!user) {
         navigate("/")
       }
@@ -38,10 +45,18 @@ const Nav = () => {
       ? handleShow(true)
       : handleShow(false)
   }
+
+  useEffect(() => {
+    if(searchValue) {
+      navigate(`/search?q=${searchValue}`)
+    }
+  }, [searchValue, navigate]);
   
-  const handleChange = (e) => {
+  const handleSearchClick = (e) => {
+    navigate(`/search`)
+  }
+  const handleSearchChange = (e) => {
     setSearchValue(e.target.value)
-    navigate(`/search?q=${e.target.value}`)
   }
 
   const handleAuth = () => {
@@ -84,10 +99,12 @@ const Nav = () => {
           <>
             <Input 
               value={searchValue} 
-              onChange={handleChange}
+              onFocus={handleSearchClick}
+              onChange={handleSearchChange}
               className="nav__input"
               type="text"
               placeholder="movie search"
+              ref={searchInputRef}
             />
 
             <SignOut onClick={handleSignOut}>

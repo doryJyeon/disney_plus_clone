@@ -32,7 +32,7 @@ const MovieModal = ({
           <div className="modal__content">
             <p className="modal__details">
               <span className="modal__user_perc">100% for you</span>
-              &nbsp;
+              &ensp;
               {release_date ? release_date : first_air_date}
             </p>
 
