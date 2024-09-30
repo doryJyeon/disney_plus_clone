@@ -108,6 +108,7 @@
 
 .swiper-pagination {
   text-align: right !important;
+  margin-left: -13px;
 }
 
 .swiper-pagination-bullet {
