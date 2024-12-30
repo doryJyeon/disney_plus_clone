@@ -4,6 +4,17 @@ React18
 
 Pc / Tablet / Mobile
 
+## 실행 방법
+```
+// npm install
+npm i
+npm run dev
+
+// localhost 접속
+localhost:3000
+```
+> Login 후 메인 페이지로 이동됩니다.
+
 ## 구현 화면
 ### login
 ![login](https://github.com/user-attachments/assets/dcafd0ec-5d04-44d5-b0cb-7d8ae2db0506)<br  />
